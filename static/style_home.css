@@ -1,0 +1,57 @@
+body {
+	background-color: #A9A9A9;
+	text-align: center;
+	font-family: Verdana;
+	width: 100%;
+	margin: 0;
+	top: 0;
+	padding: 0;
+}
+
+.contents {
+	margin-left:20%;
+	width: 60%;
+	text-align: center;
+}
+h1 {
+	color: white;
+}
+
+.actions{
+	text-align: center;
+}
+
+input[type = submit] {
+	box-sizing: border-box;
+	border-radius: 15px;
+	transition-duration: 0.4s;
+	font-size: 25px;
+	width: 250px;
+    height: 50px;
+    margin-top: 25px;
+    padding: 0;
+    display: inline-block;
+    line-height: 50px;
+    text-align: center;
+}
+
+input:hover[type=submit] {
+	box-shadow: 10px 10px 5px #505050;
+}
+
+img {
+	margin: 50px;
+	width: 50%;
+	height: auto;
+}
+
+p {
+	color: #585858;
+	margin-left: 20px;
+  	margin-right: 20px;
+}
+
+p.footer {
+	font-size: 10px;
+	color: #585858;
+}
