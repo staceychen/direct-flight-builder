@@ -1,17 +1,19 @@
-from flask import Flask, request, render_template, send_file, redirect
-#from flask.ext.uploads import UploadSet, configure_uploads, DOCUMENTS
+from flask import Flask, request, render_template, send_file, redirect, url_for
+from flask_uploads import UploadSet, configure_uploads, DATA
 import DirectFlightBuilder
 
 app = Flask(__name__)
-#input = UploadSet('input', DOCUMENTS)
-history = []
+inputquery = UploadSet('inputquery', DATA)
 
-#app.config['UPLOADED_PHOTO_DEST'] = 'static/inputs'
-#configure_uploads(app, input)
+app.config['UPLOADS_DEFAULT_DEST'] = 'inputs'
+configure_uploads(app, inputquery)
 
-#@app.route('/upload', methods=['GET', 'POST'])
-#def upload():
-    
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == "POST" and 'inputquery' in request.files:
+        inputquery.save(request.files['inputquery'])
+        return "UPLOAD COMPLETE"
+    return "UPLOAD FAILED"
 
 @app.route('/')
 def home():
@@ -19,7 +21,6 @@ def home():
 
 @app.route('/', methods =['POST'])
 def call_builder():
-    global history
     if "add" in request.form:
         a = request.form['a']
         b = request.form['b']
@@ -32,17 +33,9 @@ def call_builder():
     
         DirectFlightBuilder.direct_flight_builder(a, (a_lat, a_lng), a_radius, b, 
                                                   (b_lat, b_lng), b_radius)
-        history.append(a + " <--> " + b)
-        
-        reversed_history = history[::-1]
-        
-        history_string = "<h3>History</h3><br>"
-        for i in reversed_history:
-            history_string += "<h6>" + i + "<h6>"
             
             
-        return render_template("index.html",
-                               history = history_string)
+        return render_template("index.html")
         
         
     elif "download" in request.form:
@@ -50,9 +43,20 @@ def call_builder():
     
     elif "clear" in request.form:
         DirectFlightBuilder.new_file()
-        history = []
         
         return render_template("index.html")
+    
+    
+    elif "upload" in request.form:
+        print("here")
+        print(str(request.files))
+        if 'inputquery' in request.files:
+            inputquery.save(request.files['inputquery'])
+            print("im here")
+            return "UPLOAD COMPLETE"
+        
+        return render_template('index.html')
+    
     
     elif "load" in request.form:
         DirectFlightBuilder.pre_processing()

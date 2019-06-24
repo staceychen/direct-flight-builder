@@ -42,13 +42,13 @@
 					<input class = "button" type = "submit" name = "download" value= "Download"/>
 					<input class = "button" type = "submit" name = "clear" value= "Clear"/>
 				</div>
+				<div class="actions" enctype = "multipart/form-data" action = "{{ url_for('upload) }}'">
+					<input class = "button" type = "submit" name = "upload" value= "Upload"/>
+					<input class = "button" type = "file" name = "inputquery"/>
+				</div>
 		</form>
 		<br>
 		
-		</div>
-
-		<div class = "history">
-			{{ history|safe }}
 		</div>
 
 		<img align = "middle" src = "http://pluspng.com/img-png/free-png-hd-planes-airplane-png-clipart-5060.png">
