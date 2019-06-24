@@ -92,7 +92,25 @@ def pre_processing():
                         new_ap.set_flight(date, dest)
                         organized_set.place_airport(new_ap)
                     
-    
+def process_input_file():
+    # open csv input
+    with open('inputs/document.csv', encoding = 'latin-1') as input_data:
+        csv_reader = csv.DictReader(input_data, delimiter=',')
+        for row in csv_reader:
+            # parse csv
+            a = str(row['a'])
+            b = str(row['b'])
+            a_radius = str(row['a_radius'])
+            b_radius = str(row['b_radius'])
+            a_lat = str(row['a_lat'])
+            a_lng = str(row['a_lng'])
+            b_lat = str(row['b_lat'])
+            b_lng = str(row['b_lng'])
+            
+            # call direct_flight_builder
+            direct_flight_builder(a, (a_lat, a_lng), a_radius, b, 
+                                                  (b_lat, b_lng), b_radius)
+        
 def direct_flight_builder(loc_a, coord_a, radius_a, loc_b, coord_b, radius_b):
     # prepare the csv output
     with open('outputs/flights.csv', 'a', newline="\n", encoding='latin-1') as out_file:
